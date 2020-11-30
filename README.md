@@ -36,3 +36,6 @@ Run: `./gradlew run`, and then try one of the endpoints by navigating to [http:/
 
 - [Micronaut Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
 
+## Additional Resources 
+
+See these [Micronaut guides](https://guides.micronaut.io/index.html) that cover many areas of a production app.
