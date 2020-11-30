@@ -1,0 +1,63 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("io.micronaut.application") version "1.2.0"
+}
+
+version = "0.1"
+group = "labs.wyn"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("labs.wyn.*")
+    }
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    implementation("javax.annotation:javax.annotation-api")
+    implementation("io.swagger.core.v3:swagger-annotations")
+
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-tracing")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3")
+
+    runtimeOnly("io.jaegertracing:jaeger-thrift")
+
+    implementation("org.apache.logging.log4j:log4j-core:2.12.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
+
+    // Helps to handle generating the reflection-config.json metadata that is automatically picked up by the native-image tool
+    /// GraalVM: GraalVM Native Image allows you to ahead-of-time compile Java code to a standalone executable, called a native image. This executable includes the application, the libraries, the JDK and does not run on the Java VM, but includes necessary components like memory management and thread scheduling from a different virtual machine, called “Substrate VM”. Substrate VM is the name for the runtime components (like the deoptimizer, garbage collector, thread scheduling etc.). The resulting program has faster startup time and lower runtime memory overhead compared to a Java VM.
+    annotationProcessor("io.micronaut:micronaut-graal")
+    compileOnly("org.graalvm.nativeimage:svm")
+}
+
+
+application {
+    mainClass.set("labs.wyn.Application")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+tasks {
+
+
+}
+
